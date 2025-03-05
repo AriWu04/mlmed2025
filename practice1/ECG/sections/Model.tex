@@ -1,0 +1,116 @@
+\newpage
+\section{Model}
+\subsection{XGBoost}
+\subsubsection{Method}
+\indent \indent In the XGBoost classification, the dataset was initially standardized with \textbf{StandardScaler} to guarantee that all features possess a standard distribution, enhancing model convergence.  The XGBoost classifier was subsequently trained using a multi-class softmax goal to predict one of the five ECG heartbeat classifications.  The model's performance was assessed using \textbf{log loss}, while training progress was tracked via an evaluation set.  Following training, predictions were conducted on the test dataset, resulting in a classification accuracy of \textbf{X\%}.  The outcomes were subsequently examined using a classification report, yielding precision, recall, and F1-score insights for each category.
+
+\subsubsection{Evaluation}
+\begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabularx}{\linewidth}{ % Changed to \linewidth for better fit in multicolumn
+        |>{\RaggedRight\hsize=0.7\hsize\linewidth=\hsize}X   %Class
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Accuracy
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Precision
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Recall
+        |>{\centering\hsize=1.0\hsize\linewidth=\hsize}X|  %F1-score
+        }
+        \hline
+        \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \tabularnewline
+        \hline
+        N     & 0.99              & 0.98             & 0.98         \tabularnewline
+        \hline
+        S     & 0.62              & 0.80               & 0.70              \tabularnewline
+        \hline
+        V     & 0.93              & 0.95               & 0.94   \tabularnewline
+        \hline
+        F     & 0.59              & 0.85               & 0.70 \tabularnewline
+        \hline
+        Q     & 0.98              & 0.98               & 0.98
+        \tabularnewline
+        \hline
+        \textbf{Accuracy}     &               &                & \textbf{0.97}
+        \tabularnewline
+        \hline
+    \end{tabularx}
+    \captionof{table}{XGBoost Model performance metrics}
+    \label{tab:xgboost_performance_metrics}
+\end{center}
+
+\indent 
+The XGBoost classifier scored an \textbf{overall test accuracy of 96.84\%}, exhibiting high performance in ECG heartbeat classification. The precision, recall, and F1-score for each class give more insights into the model's efficacy:
+\begin{itemize}
+    \item \textbf{Class N and Class Q} had high precision and recall (~98-99\%), indicating the model can accurately identify and classify regular and specific abnormal heartbeats with minimal misclassification.
+    \item \textbf{Class V} also performed well, with an F1 Score of 0.94, meaning the model can effectively detect this heartbeat type.
+    \item \textbf{Class S and Class F}, representing minority categories, showed lower performance, with F1-scores of 0.70. Despite SMOTE balancing the dataset, these classes remain more challenging to classify, likely due to overlapping features or limited distinguishing characteristics.
+    \item The \textbf{macro average F1 Score (0.86)} suggests that performance varies across classes, while the \textbf{weighted average F1 Score (0.97)} confirms that the model performs well overall, benefiting from the majority class influence.
+\end{itemize}
+
+\indent While XGBoost demonstrates high accuracy, improvements such as fine-tuning hyperparameters, using feature engineering, or applying more advanced data augmentation techniques may further enhance classification, particularly for minority classes.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=1\columnwidth]{img/XGBoost_Loss.svg}    
+    \caption{XGBoost Model Loss}
+    \label{fig:XGBoostLoss}
+\end{figure}
+
+\indent The training loss for the XGBoost model declines consistently during the training phase, signifying that the model is proficiently acquiring patterns from the data.  However, the validation loss, while decreasing, does so at a slower rate.  This decrease indicates that the model may not generalize to unknown data as effectively as to the training set.  The increasing disparity between training and validation loss raises concerns regarding potential overfitting when the model gets too tailored to the training data and fails to perform comparably on novel samples.  Overfitting can lead to high accuracy on the training set but poor performance when meeting real-world ECG data.  To alleviate this problem, we should investigate strategies such as hyperparameter adjustment, early halting, dropout regularization, and boosting data diversity through augmentation or further preprocessing to enhance generalization.
+ 
+\subsection{CNNs}
+\subsubsection{Method}
+\indent \indent The CNN model was constructed with numerous convolutional and pooling layers to extract significant information from ECG data while integrating dropout layers to avoid overfitting. The model was trained using the Adam optimizer with a learning rate of 0.0001 and categorical cross-entropy loss. Early stopping was adopted to increase generalization, minimizing wasteful training after validation loss stopped improving. The input data was reshaped to satisfy CNN criteria, and labels were one-hot encoded for multi-class classification. After training for up to 20 epochs, the model showed high performance, demonstrating its capacity to successfully understand complicated patterns in ECG data.
+
+\subsubsection{Evaluation}
+\begin{center}
+    \renewcommand{\arraystretch}{2}
+    \begin{tabularx}{\linewidth}{ % Changed to \linewidth for better fit in multicolumn
+        |>{\RaggedRight\hsize=0.7\hsize\linewidth=\hsize}X   %Class
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Accuracy
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Precision
+        |>{\centering\hsize=1.1\hsize\linewidth=\hsize}X  %Recall
+        |>{\centering\hsize=1.0\hsize\linewidth=\hsize}X|  %F1-score
+        }
+        \hline
+        \textbf{Class} & \textbf{Precision} & \textbf{Recall} & \textbf{F1-score} \tabularnewline
+        \hline
+        N     & 0.99              & 0.97             & 0.98         \tabularnewline
+        \hline
+        S     & 0.57              & 0.84               & 0.68              \tabularnewline
+        \hline
+        V     & 0.93              & 0.95               & 0.94   \tabularnewline
+        \hline
+        F     & 0.60              & 0.87               & 0.71 \tabularnewline
+        \hline
+        Q     & 0.98              & 0.99               & 0.98
+        \tabularnewline
+        \hline
+        \textbf{Accuracy}     &               &                & \textbf{0.97}
+        \tabularnewline
+        \hline
+    \end{tabularx}
+    \captionof{table}{CNN Model performance metrics}
+    \label{tab:cnn_performance_metrics}
+\end{center}
+
+\indent \indent The CNN model scored an exceptional \textbf{test accuracy of 96.72\%}, suggesting high overall performance. The accuracy, recall, and F1-score values are substantial across most classes, notably for class N and class Q, where the model displays remarkable classification performance. The \textbf{macro average F1-score of 0.86} implies that the model maintains a reasonable balance across all classes despite the class imbalance.
+
+\indent For other classes, the model demonstrates considerable gains in recall, notably for \textbf{class S (84\%)} and \textbf{class F (87\%)}, indicating it effectively recognizes a more significant proportion of these samples than XGBoost. However, the accuracy for \textbf{class S (57\%)} remains lower, indicating some misclassification into other groups. Despite this, the model performs better in a recall, which is vital in medical applications because detecting all cases of a condition is more important than eliminating false positives.
+
+\begin{figure}[H]
+    \centering
+    \includesvg[width=1\columnwidth]{img/CNN_Loss.svg}    
+    \caption{CNN Model Loss}
+    \label{fig:CNNLoss}
+\end{figure}
+
+\indent The training loss for the CNN model continuously lowers across epochs, demonstrating that the model is effectively learning from the data, suggesting that the convolutional layers successfully collect essential properties in the ECG signals.  The validation loss initially follows a similar declining pattern but swings slightly after a few epochs.  These oscillations may indicate minor overfitting when the model gets overly specialized in the training data and fails to maintain consistent performance on unseen samples.  However, dropout layers and early stopping help avoid severe overfitting, guaranteeing that the model does not continue training once performance declines.  Despite modest changes, the overall trend of diminishing loss implies that the model generalizes well to new data, giving it a solid strategy for ECG heartbeat categorization.
+
+\subsection{Comparision}
+\begin{figure}[H]
+    \centering
+    \includesvg[width=1\columnwidth]{img/comparison.svg}    
+    \caption{Confusion Matrices of two models}
+    \label{fig:ConfustionMatrices}
+\end{figure}
+
+\indent \indent Both models exhibit good performance, with many correctly identified samples for \textbf{class N}, the majority class. However, CNN demonstrates somewhat improved classification accuracy across most classes, as demonstrated in the lower number of misclassified samples compared to XGBoost. Specifically, CNN exhibits fewer misclassifications in \textbf{class N} and \textbf{class V}, showing a more substantial capacity to identify these groups: \textbf{class S} and \textbf{class F} display misclassification in both models. However, CNN shows a slight improvement in differentiating \textbf{class S}.

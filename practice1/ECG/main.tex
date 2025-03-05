@@ -1,0 +1,79 @@
+% CREDITS:
+% Comprehensive exam template for ECE Ph.D. students at Queen's University. by Jefferson Silveira
+\documentclass[a4paper,12pt]{article}
+\usepackage[left=30mm,top=30mm,right=30mm,bottom=30mm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern} % Latin Modern
+\usepackage{vntex} % Load vntex after inputenc and fontenc
+\usepackage{geometry}
+\usepackage{etoolbox} %required for cover page
+\usepackage{booktabs}
+\usepackage[usestackEOL]{stackengine}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{array}
+\usepackage{mathtools}
+\usepackage{multirow}
+\usepackage{xcolor}
+\usepackage{float}
+\usepackage{hyperref}
+\usepackage[capitalise]{cleveref}
+\usepackage{enumitem,kantlipsum}
+\usepackage{amssymb}
+\usepackage[square,numbers,sort]{natbib}
+\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{listings}
+\usepackage{minted}
+\usemintedstyle{emacs}
+\usepackage[english]{babel} % Language setting
+\usepackage{tabularx} % For automatic column width
+\usepackage{longtable} % Hỗ trợ bảng dài
+\usepackage{tcolorbox} % Gói tạo khung viền'
+\usepackage{subcaption}
+\usepackage{svg}
+
+\usepackage{xurl} % Hỗ trợ URL dài tự động xuống dòng
+\usepackage{xcolor} % Hỗ trợ màu sắc
+\PassOptionsToPackage{colorlinks=true, allcolors=black}{hyperref}
+
+% Redefine "Conteúdo" to "Table of Content"
+\addto\captionsportuguese{\renewcommand{\contentsname}{Table of Content}}
+
+\renewcommand{\listingscaption}{Algorithm}
+\renewcommand{\listoflistingscaption}{List of Algorithms}
+\renewcommand{\arraystretch}{1.5}
+\bibliographystyle{unsrtnat}
+
+\hypersetup{
+    colorlinks,
+    linkcolor={black},
+    citecolor={blue!50!black},
+    urlcolor={blue!80!black}
+}
+
+\linespread{1}
+
+\newtheorem{theorem}{Theorem}[section]
+\graphicspath{{figures/}}	
+
+% ------------------- important:
+
+\begin{document}
+
+\pagenumbering{gobble} % remove page numbers (and reset to 1)
+
+\input{front}
+
+\pagenumbering{arabic} % Arabic page numbers (and reset to 1)
+
+% Sections
+\input{sections/introduction}
+\input{sections/dataset}
+\input{sections/Model}
+\input{sections/conclusion}
+\input{sections/References}
+\clearpage % If you want the references in a separate page
+\end{document}

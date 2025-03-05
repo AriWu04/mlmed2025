@@ -1,0 +1,10 @@
+\section{Conclusion}
+\indent \indent In this ECG classification assignment, both CNN and XGBoost demonstrated outstanding accuracy, with CNN reaching 96.72\% and XGBoost earning 96.84\%. While their overall performance is comparable, considerable disparities exist in how they approach minority classes and generalize the data. 
+
+\indent XGBoost fared well in terms of accuracy, delivering less erroneous optimistic projections. However, it struggled with memory for many minority classes, such as class S and class F, indicating that it missed some of these requirements. On the other hand, CNN displayed stronger recall, particularly for minority groups, showing it is better at detecting all instances of specific arrhythmias, even if some misclassifications occur. This increased memory is crucial in medical applications, where overlooking a valid case may have devastating effects. 
+
+\indent Additionally, the confusion matrices demonstrate that CNN decreases misclassification for minority classes relative to XGBoost. This rise is likely related to CNN's propensity to capture spatial and temporal patterns in ECG data, making it well-suited for time-series classification tasks.    However, CNN also indicated more significant fluctuations in validation loss, indicating a need for careful tuning to limit overfitting. 
+
+\indent Given the medical context, where detecting all possible arrhythmias is crucial, CNN is suggested due to its improved recall performance for minority classes. 
+
+\clearpage
